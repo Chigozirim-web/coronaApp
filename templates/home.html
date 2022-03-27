@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block body%}
+	<br>
+	<div>
+		<div>   
+			<div class="card mb-3 text-center">
+				<div class="card-body">
+				<h2 class="card-title">Welcome!</h2>
+				<p class="card-text" style="font-style: oblique;">
+					An innovative solution to track the spread of Covid for overall well-being
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-pulse-fill" viewBox="0 0 16 16">
+						<path fill-rule="evenodd" d="M1.475 9C2.702 10.84 4.779 12.871 8 15c3.221-2.129 5.298-4.16 6.525-6H12a.5.5 0 0 1-.464-.314l-1.457-3.642-1.598 5.593a.5.5 0 0 1-.945.049L5.889 6.568l-1.473 2.21A.5.5 0 0 1 4 9H1.475ZM.879 8C-2.426 1.68 4.41-2 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C11.59-2 18.426 1.68 15.12 8h-2.783l-1.874-4.686a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.88Z"/>
+					</svg>
+				</p>
+				</div>
+			</div>
+		</div>
+
+		<br>
+		<div>
+			<!-- vistor = 1, agent = 2, hospital = 3, establishment = 4-->
+			<div class="row justify-content-center">
+				<div class="col-sm-4 bg-light text-dark">
+					<div class="card-body text-center">
+						<img src="{{ url_for('static', filename='stick.png') }}" class="card-img-top" alt="..."  height="300">
+						<p></p>
+						<h5 class="card-title">Visitor</h5>
+						<p>Visiting Somewhere? Scan QR-Code to enter</p>
+						<a href=" {{ url_for('routes.place') }}" class="btn btn-primary">Locate Place </a>
+						</div>
+				</div>
+			</div>
+			<br>
+			
+			<div class="row">
+				<div class="col-sm-4">
+				<div class="card bg-light text-dark">
+					<div class="card-body text-center">
+						<img src="{{ url_for('static', filename='agent.jpg') }}" class="card-img-top" alt="..."  height="400">
+						<p></p>
+						<h5 class="card-title">Agency</h5>
+					<a href="{{ url_for('auth.login') }}" class="btn btn-primary">Login</a>
+					</div>
+				</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="card bg-light text-dark">
+					<div class="card-body text-center">
+						<img src="/static/hopital.jpg" class="card-img-top" alt="..."  height="400">
+						<p></p>
+						<h5 class="card-title">Hospital</h5>
+						<a href="{{ url_for('auth.register', user=3) }}" class="btn btn-primary">Register</a>
+					</div>
+					</div>
+				</div>
+
+				<div class="col-sm-4">
+					<div class="card bg-light text-dark">                
+						<div class="card-body text-center">
+							<img src="{{ url_for('static', filename='building.jpg') }}" class="card-img-top" alt="..."  height="400">
+							<p></p>
+							<h5 class="card-title">Establishment</h5>
+							<a href="{{ url_for('auth.register', user=4) }}" class="btn btn-primary">Register</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<br><br>
+		</div>
+		<br> 
+	</div>
+
+
+{% endblock %}

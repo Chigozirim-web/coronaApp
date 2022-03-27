@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block body%}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-sm-6 bg-light text-dark">
+            <div class="card-body text-center">
+                <a href="#" download="qrcode.jpg">
+                    <img src="{{ qrcode(data) }}" class="card-img-top" alt="..." height="400">
+                </a>
+                <p></p>
+                <h5 class="card-title">Click image to download</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock%}

@@ -1,0 +1,182 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if visitors %}
+<br>
+    <div class="container">
+        <input type="text" placeholder="Search..." id="filterby" autocomplete="off" onkeyup="searchandFilter()">
+        <button><a></a> Search by Person</button>
+    </div>
+
+    <div class="container">
+        <table class="table" id="visitorTable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for visitor in visitors %}
+              <tr>
+                <th scope="row"></th>
+                <td>{{ visitor.v_name }}</td>
+            {% if not visitor.v_email %}
+                <td><b>-</b></td>
+            {% else %}
+                <td>{{ visitor.v_email }}</td>
+            {% endif %}
+            {% if not visitor.phone_number %}
+                <td><b>-</b></td>
+            {% else %}
+                <td>{{ visitor.phone_number }}</td>
+            {% endif %}
+
+                {% if visitor.infected == 0 %}
+                    {% set status = "not infected" %}
+                    <td><button class="btn btn-success" disabled> {{ status }}</button></td>
+                {% else %}
+                    {% set status = "infected" %}
+                    <td><button class="btn btn-danger" disabled> {{ status }}</button></td>
+                {% endif %}
+                <td><button type="button" class="btn btn-light"> <a href="{{ url_for('routes.visitor_place', did=visitor.device_id) }}"
+                    style="text-decoration:none"> 
+                    Show user's visited places and dates 
+                    </a></button>
+                </td>
+              </tr>
+            </tbody>   
+        {% endfor %}
+          </table>
+    </div>
+    <br><br>
+
+{% elif not visitors %}
+    <div class="container"> 
+        <h3> There aren't any registered visitors yet. Check back in later</h3>           
+    </div>
+    <br>
+{% endif %}
+
+
+{% if places %}
+    <div class="container">
+        <input type="text" placeholder="Search..." id="filterby2" autocomplete="off" onkeyup="filter()">
+        <button><a></a> Search by Place</button>
+    </div>
+
+    <div class="container">
+        <table class="table" id="placeTable">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Address</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+        {% for place in places %}
+            <tr>
+                <th scope="row"></th>
+                <td>{{ place.p_name }}</td>
+                <td>{{ place.p_address }}</td>
+                <td>
+                    <button type="button" class="btn btn-light"> <a href="{{ url_for('routes.visitor_place', pid=place.pid) }}"
+                        style="text-decoration:none">
+                        Show places and their visitings </a> </button>
+                </td>
+            </tr>
+            </tbody>   
+        {% endfor %}
+        </table>
+    </div>
+    <br><br>
+
+{% elif not places %}
+<div class="container"> 
+    <h3> There aren't any registered places yet. Check back in later</h3>           
+</div>
+<br>
+{% endif %}
+
+
+
+{% if hospitals %}
+<div class="container">
+    <div class="row">
+        {% for h in hospitals %}
+            <div class="col-sm-3">
+                <div class="card bg-light text-dark">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ h.h_name }}</h5>
+                        <p><h5>At:</h5> <i>{{ h.h_email }}</i> </p>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal{{h.hid}}">  
+                            Verify hospital's registeration
+                        </button>
+                    
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal{{h.hid}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel"> Verify </h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <h5>Provide Login info for {{h.h_name}} to accept registration</h5>
+
+                            <form method="post" action="{{ url_for('routes.sendMail', hid=h.hid) }}">
+                                <div class="row">
+                                    <div class="col">
+                                      <input type="text" class="form-control" placeholder="Username" aria-label="name" name="username">
+                                    </div>
+                                    <div class="col">
+                                      <input type="text" class="form-control" placeholder="Password" aria-label="password", name="password">
+                                    </div>
+                                </div>
+                                <br>
+                                
+                                <!-- Direct to input password and username to db, 
+                                    then send mail to hospital with those details -->
+                                <div class="row"> 
+                                    <div class="col">
+                                        <button type="submit" class="btn btn-success"> Submit</button>
+                                    </div>   
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<br>
+
+
+{% elif not hospitals %}
+<div class="container"> 
+    <h3> There aren't any registered hospitals yet. Check back in later</h3>           
+</div>
+<br>
+{% endif %}
+
+
+{% endblock %}

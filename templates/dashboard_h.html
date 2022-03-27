@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block body%}
+    <div class="container justify-content-md-end">
+        <!--To search and filter table by visitor's name
+            function definition in myjava.js 
+        -->
+        <input type="text" placeholder="Search..." id="filterby" onkeyup="searchandFilter()" autocomplete="off">
+    </div>    
+    <br>
+
+  {% if visitors %}
+    <div class="container">
+        <table class="table" id="visitorTable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Status</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+        {% for visitor in visitors %}
+              <tr>
+                <th scope="row"></th>
+                <td>{{ visitor.v_name }}</td>
+              {% if not visitor.v_email %}
+                <td><b>-</b></td>
+              {% else %}
+                <td>{{ visitor.v_email }}</td>
+              {% endif %}
+              {% if not visitor.phone_number %}
+                <td><b>-</b></td>
+              {% else %}
+                <td>{{ visitor.phone_number }}</td>
+              {% endif %}
+
+              {% if visitor.infected == 0 %}
+                    {% set status = "not infected" %}
+                    <td><button class="btn btn-success" disabled> {{ status }}</button></td>
+              {% else %}
+                    {% set status = "infected" %}
+                    <td><button class="btn btn-danger" disabled> {{ status }}</button></td>
+              {% endif %}
+                <td><button type="button" class="btn btn-light"> <a href="{{ url_for('routes.change_status', id=visitor.vid) }}"
+                        style="text-decoration:none"> Change infection status</a> 
+                    </button>
+                </td>
+              </tr>
+            </tbody>   
+        {% endfor %}
+          </table>
+    </div>
+    {% else %}
+    <div>
+      <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 bg-light text-dark">
+                <div class="card-body text-center">
+                    <h3 class="card-title">Oops! </h3>
+                    <p class="card-text">
+                       <h5> There aren't any registered visitors yet. Check back in later</h5>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+  {% endif %}
+{% endblock %}

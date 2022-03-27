@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body%}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 bg-light text-dark">
+                <div class="card-body text-center">
+                    <h3 class="card-title">You're in! </h3>
+                    <p class="card-text">
+                       <h5> Welcome {{ visitor }} to {{ place }}</h5>
+                    </p>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-primary">Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

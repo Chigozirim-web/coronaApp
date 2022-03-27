@@ -1,0 +1,81 @@
+
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if visitor %}
+        <!--Visit details for visitor: place, date, time etc. -->
+        <div class="container">
+            <h3>Visiting details of {{ name.v_name }} </h3>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Place</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Entry Date</th>
+                    <th scope="col">Entry Time</th>
+                    <th scope="col">Exit Date</th>
+                    <th scope="col">Exit Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+            {% for data in visitor %}
+                  <tr> 
+                    <th scope="row"></th>
+                    <td>{{ data.p_name }}</td>
+                    <td>{{ data.p_address }}</td>
+                    <td>{{ data.entry_date }}</td>
+                    <td>{{ data.entry_time }}</td>
+                    <td>{{ data.exit_date }}</td>
+                    <td>{{ data.exit_time }}</td>
+                  </tr>
+                </tbody>   
+            {% endfor %}
+              </table>
+        </div>
+{% endif %}
+
+
+{% if place %}
+        <!--Visit details for place: visitors, date, time etc. -->
+        <div class="container">
+            <h3>Visiting details of {{ name.p_name }} </h3>
+            <table class="table">
+                <thead>
+                  <tr> 
+                    <th scope="col">#</th>
+                    <th scope="col">Visitor</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Entry Date</th>
+                    <th scope="col">Entry Time</th>
+                    <th scope="col">Exit Date</th>
+                    <th scope="col">Exit Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+            {% for data in place %}
+                  <tr>
+                    <th scope="row"></th>
+                    <td>{{ data.v_name }}</td>
+                    <td>{{ data.v_address }}</td>
+                {% if data.infected == 0 %}
+                    {% set status = "not infected" %}
+                    <td><button class="btn btn-success"> {{ status }}</button></td>
+                {% else %}
+                    {% set status = "infected" %}
+                    <td><button class="btn btn-danger"> {{ status }}</button></td>
+                {% endif %}
+                    <td>{{ data.entry_date }}</td>
+                    <td>{{ data.entry_time }}</td>
+                    <td>{{ data.exit_date }}</td>
+                    <td>{{ data.exit_time }}</td>
+                  </tr>
+                </tbody>   
+            {% endfor %}
+              </table>
+        </div>
+{% endif %}
+
+{% endblock %}
